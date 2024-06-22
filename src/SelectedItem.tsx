@@ -9,6 +9,9 @@ import {
 
 import axios from 'axios'
 
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { nord } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+
 interface GitTag {
   name: string
 }
@@ -57,6 +60,21 @@ export default function SelectedItem({
     getVersions()
   }, [item.versions])
 
+  const codeString = `check_python() {
+  if command -v python3 &> /dev/null; then
+    PYTHON_VERSION=$(python3 --version)
+    REQUIRED_VERSION="3.6.0"
+    if [[ "$(printf '%s\\n' "$REQUIRED_VERSION" "$PYTHON_VERSION" | sort -V | head -n1)" == "$REQUIRED_VERSION" ]]; then
+      echo -e "Python está instalado. Versión: $PYTHON_VERSION"
+    else
+      echo -e "Python está instalado, pero la versión es X. Se requiere al menos la versión 3.6.0$}"
+    fi
+  else
+    echo -e "Python no está instalado. Por favor, instálalo desde https://www.python.org/"
+  fi
+}
+  `
+
   return (
     <div
       id="seleted-item"
@@ -84,7 +102,7 @@ export default function SelectedItem({
         <Tabs.Item active title="Checks" icon={HiCog}>
           <div className="flex flex-col px-2">
             <fieldset className="flex max-w-md flex-col gap-4">
-              <legend className="mb-4">Check if it's installed with:</legend>
+              <legend className="mb-6">Check if it's installed with:</legend>
 
               <div className="flex items-center gap-2 mb-2">
                 <Radio
@@ -180,22 +198,44 @@ export default function SelectedItem({
           </div>
         </Tabs.Item>
         <Tabs.Item title="Messages" icon={HiChatBubbleBottomCenterText}>
-          This is{' '}
-          <span className="font-medium text-gray-800 dark:text-white">
-            Settings tab's associated content
-          </span>
-          . Clicking another tab will toggle the visibility of this one for the
-          next. The tab JavaScript swaps classes to control the content
-          visibility and styling.
+          <div className="flex flex-col px-2">
+            <div className="flex flex-col gap-4">
+              <legend className="mb-2">
+                You can change the messages here:
+              </legend>
+
+              <Label htmlFor="installed-message">Installed</Label>
+              <TextInput
+                type="text"
+                id="installed-message"
+                value="Python is installed."
+                className="w-full"
+              />
+              <Label htmlFor="not-installed-message">Not installed</Label>
+              <TextInput
+                type="text"
+                id="not-installed-message"
+                value="Python is not installed. Please download it from https://www.python.org/"
+              />
+            </div>
+          </div>
         </Tabs.Item>
         <Tabs.Item title="Code" icon={HiMiniCommandLine}>
-          This is{' '}
-          <span className="font-medium text-gray-800 dark:text-white">
-            Settings tab's associated content
-          </span>
-          . Clicking another tab will toggle the visibility of this one for the
-          next. The tab JavaScript swaps classes to control the content
-          visibility and styling.
+          <SyntaxHighlighter
+            language="javascript"
+            style={nord}
+            customStyle={{ borderRadius: '0.5rem' }}
+            showLineNumbers
+          >
+            {codeString}
+          </SyntaxHighlighter>
+          <Button
+            onClick={() => navigator.clipboard.writeText(codeString)}
+            color="light"
+            className="w-full mt-6"
+          >
+            Copy code
+          </Button>
         </Tabs.Item>
       </Tabs>
     </div>

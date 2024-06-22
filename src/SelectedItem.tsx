@@ -49,6 +49,12 @@ export default function SelectedItem({
   const [minVersion, setMinVersion] = useState('')
   const [maxVersion, setMaxVersion] = useState('')
   const [versions, setVersions] = useState<string[]>([])
+  const [installedMessage, setInstalledMessage] = useState(
+    'Python is installed.',
+  )
+  const [notInstalledMessage, setNotInstalledMessage] = useState(
+    'Python is not installed. Please download it from https://www.python.org/',
+  )
 
   // const data = getAllVersions(item.versions)
 
@@ -145,7 +151,7 @@ export default function SelectedItem({
                   placeholder="1.0.0"
                   className="w-24 ml-2"
                   value={exactVersion}
-                  onChange={(e) => setExactVersion(e.target.value)}
+                  onChange={(e: any) => setExactVersion(e.target.value)}
                   onClick={() => {
                     setSelectedOption(`exact-version-option-${item.id}`)
                     setMinVersion('')
@@ -181,17 +187,17 @@ export default function SelectedItem({
                   placeholder="1.0.0"
                   className="w-24"
                   value={minVersion}
-                  onChange={(e) => setMinVersion(e.target.value)}
+                  onChange={(e: any) => setMinVersion(e.target.value)}
                 />
                 <Label htmlFor={`custom-version-option-${item.id}`}>to</Label>
                 <TextInput
-                  id={`min-version-input-${item.id}`}
+                  id={`max-version-input-${item.id}`}
                   type="text"
                   sizing="sm"
                   placeholder="1.0.0"
                   className="w-24"
-                  value={minVersion}
-                  onChange={(e) => setMinVersion(e.target.value)}
+                  value={maxVersion}
+                  onChange={(e: any) => setMaxVersion(e.target.value)}
                 />
               </div>
             </fieldset>
@@ -208,21 +214,23 @@ export default function SelectedItem({
               <TextInput
                 type="text"
                 id="installed-message"
-                value="Python is installed."
+                value={installedMessage}
+                onChange={(e: any) => setInstalledMessage(e.target.value)}
                 className="w-full"
               />
               <Label htmlFor="not-installed-message">Not installed</Label>
               <TextInput
                 type="text"
                 id="not-installed-message"
-                value="Python is not installed. Please download it from https://www.python.org/"
+                value={notInstalledMessage}
+                onChange={(e: any) => setNotInstalledMessage(e.target.value)}
               />
             </div>
           </div>
         </Tabs.Item>
         <Tabs.Item title="Code" icon={HiMiniCommandLine}>
           <SyntaxHighlighter
-            language="javascript"
+            language="bash"
             style={nord}
             customStyle={{ borderRadius: '0.5rem' }}
             showLineNumbers

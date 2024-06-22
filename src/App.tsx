@@ -7,50 +7,50 @@ import {
   TextInput,
   Tooltip,
   useThemeMode,
-} from "flowbite-react";
-import { useEffect, useState } from "react";
-import "./App.css";
-import SelectedItem from "./SelectedItem";
-import { LIST_MOCK, POPULAR_MOCK } from "./list";
+} from 'flowbite-react'
+import { useEffect, useState } from 'react'
+import './App.css'
+import SelectedItem from './SelectedItem'
+import { LIST_MOCK, POPULAR_MOCK } from './list'
 
 function App() {
-  const { setMode } = useThemeMode();
+  const { setMode } = useThemeMode()
 
   useEffect(() => {
-    setMode("dark");
-  }, [setMode]);
+    setMode('dark')
+  }, [setMode])
 
-  const [isShowingResults, setIsShowingResults] = useState(false);
-  const [searchResults, setSearchResults] = useState(LIST_MOCK);
-  const [searchValue, setSearchValue] = useState("");
+  const [isShowingResults, setIsShowingResults] = useState(false)
+  const [searchResults, setSearchResults] = useState(LIST_MOCK)
+  const [searchValue, setSearchValue] = useState('')
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchValue(value);
+    const value = e.target.value
+    setSearchValue(value)
 
     if (value.length === 0) {
-      setIsShowingResults(false);
-      setSearchResults(LIST_MOCK);
-      return;
+      setIsShowingResults(false)
+      setSearchResults(LIST_MOCK)
+      return
     }
 
     const results = LIST_MOCK.filter((item) =>
-      item.name.toLowerCase().includes(value.toLowerCase())
-    );
-    setSearchResults(results);
-    setIsShowingResults(true);
-  };
+      item.name.toLowerCase().includes(value.toLowerCase()),
+    )
+    setSearchResults(results)
+    setIsShowingResults(true)
+  }
 
-  const [selectedList, setSelectedList] = useState([] as any[]);
+  const [selectedList, setSelectedList] = useState([] as any[])
 
   const handleAddToList = (item: any) => {
-    const isItemInList = selectedList.some((i) => i.id === item.id);
-    if (isItemInList) return;
+    const isItemInList = selectedList.some((i) => i.id === item.id)
+    if (isItemInList) return
 
-    setSelectedList([...selectedList, item]);
-    setSearchValue("");
-    setIsShowingResults(false);
-  };
+    setSelectedList([...selectedList, item])
+    setSearchValue('')
+    setIsShowingResults(false)
+  }
 
   return (
     <Flowbite>
@@ -125,7 +125,7 @@ function App() {
             <section
               id="search-results"
               className={`flex flex-col gap-y-2 max-h-96 overflow-y-auto mt-4 ${
-                isShowingResults ? "flex" : "hidden"
+                isShowingResults ? 'flex' : 'hidden'
               }`}
             >
               {searchResults.map((item) => (
@@ -164,7 +164,7 @@ function App() {
         </section>
       </section>
     </Flowbite>
-  );
+  )
 }
 
-export default App;
+export default App

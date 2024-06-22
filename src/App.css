@@ -1,4 +1,32 @@
 #root {
   margin: 0;
   padding: 0;
+
+  --color-scrollbar-thumb: #4c566a;
+  --color-scrollbar-thumb-hover: #5e81ac;
+  --color-scrollbar-track: #2e3440;
+  --color-scrollbar-corner: #2e3440;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-thumb);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-scrollbar-corner);
 }
